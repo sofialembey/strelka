@@ -19,6 +19,11 @@
 .annual b{font-size:clamp(25px,4vw,34px);color:var(--accent)}
 .annual span,.scenario .note{font-size:12px;color:var(--muted)}
 @media(max-width:520px){.answer .kgrid{grid-template-columns:1fr!important}.annual{display:block}.annual span{display:block}}
+</style><style>
+.gprogress{height:4px;overflow:hidden;border-radius:99px;background:var(--line);margin:8px 0 10px}
+.gprogress i{display:block;height:100%;border-radius:inherit;background:var(--accent);transition:width .25s ease}
+.guide .gt{font-weight:700}
+@media(prefers-reduced-motion:reduce){.gprogress i{transition:none}}
 </style></head><body class="welcome-mode">
 <title>Стрелка — управление импортными поставками</title>
 <meta name="claude:viewport-fit-sides" content="cover">
@@ -1025,6 +1030,7 @@ function nav(){
   updateBells();
 }
 document.addEventListener('click',e=>{const t=e.target;
+  if(t.closest('[data-start-tour]')){startJuryTour();return}
   const b=t.closest('[data-v]');if(b){const v=b.dataset.v;if(v==='more'){openMore();return}go(v);return}
   if(t.closest('[data-bell]')){openBell();return}
   const r=t.closest('[data-role]');if(r){setRole(r.dataset.role);return}
@@ -1037,6 +1043,7 @@ document.addEventListener('change',e=>{if(e.target.matches('[data-role-sel]'))se
 function setRole(r){role=r;try{localStorage.setItem('strelka-role',r)}catch(e){};const x=ROLES.find(y=>y[0]===r);go(x[2]);toast('Вы смотрите как: '+x[4])}
 function go(v){view=v;closeOverlay();clearTimeout(tt);document.getElementById('toastBox').innerHTML='';nav();render();try{history.replaceState(null,'','#'+v)}catch(e){};window.scrollTo(0,0)}
 function openNext(){const c=pend()[0];if(!c){go('effect');return}if(view!=='map')go('map');openC(C.indexOf(c))}
+function startJuryTour(){G.on=true;G.s1=false;G.s2=false;G.s3=false;saveGuide();refreshGuide();if(!pend().length){go('effect');toast('Все решения уже приняты. Смотрите итоговый эффект.');return}go('map');openNext();toast('Шаг 1 из 3: изучите контейнер и рекомендацию')}
 /* overlay: фокус внутрь и обратно */
 const OV=document.getElementById('overlay');let lastFocus=null;
 function showOverlay(html,focusSel){if(!OV.innerHTML)lastFocus=document.activeElement;OV.innerHTML=html;const d=OV.querySelector('[role=dialog]');const f=(focusSel&&OV.querySelector(focusSel))||(d&&d.querySelector('button,input,select,[href]'));if(f)f.focus({preventScroll:true})}
@@ -1070,8 +1077,8 @@ function openBell(){const a=notifs();
 }
 
 /* тур: 3 шага */
-function guideHTML(){if(!G.on)return '';const st=[['s1','Откройте контейнер «Нужно решение»'],['s2','Примите решение по правилу выгоды'],['s3','Посмотрите эффект решения']];const cur=st.findIndex(x=>!G[x[0]]);
-  return `<section class="guide" aria-label="Как смотреть демо"><div class="gt">Демо за 1 минуту<small>${cur<0?'Готово. Дальше: сессия и бронь':'3 шага, данные демо'}</small></div>${st.map(([k,t],i)=>`<button type="button" class="gstep ${G[k]?'ok':(i===cur?'now':'')}" data-gstep="${k}"><span class="n" aria-hidden="true">${G[k]?ic('check',14):i+1}</span><span>${t}${G[k]?'<span class="sr"> (сделано)</span>':''}</span></button>`).join('')}<button type="button" class="gx" data-guide-off>Скрыть</button></section>`}
+function guideHTML(){if(!G.on)return '';const st=[['s1','1. Найдите контейнер, которому нужно решение'],['s2','2. Проверьте рекомендацию и подтвердите маршрут'],['s3','3. Оцените эффект для бизнеса']];const cur=st.findIndex(x=>!G[x[0]]);const done=st.length-st.filter(x=>!G[x[0]]).length;
+  return `<section class="guide" aria-label="Демонстрация для жюри"><div class="gt">Демо для жюри · 90 секунд<small>${cur<0?'Сценарий завершён. Можно изучить остальные разделы.':`Шаг ${done+1} из 3 · модельные данные`}</small></div><div class="gprogress" aria-hidden="true"><i style="width:${done/3*100}%"></i></div>${st.map(([k,t],i)=>`<button type="button" class="gstep ${G[k]?'ok':(i===cur?'now':'')}" data-gstep="${k}"><span class="n" aria-hidden="true">${G[k]?ic('check',14):i+1}</span><span>${t}${G[k]?'<span class="sr"> (сделано)</span>':''}</span></button>`).join('')}<button type="button" class="gx" data-guide-off>Скрыть</button></section>`}
 function refreshGuide(){const g=M.querySelector('.guide');if(g)g.outerHTML=guideHTML()}
 
 const M=document.getElementById('main');
@@ -1112,7 +1119,7 @@ R.home=()=>`
     <span class="lbl">Импорт из Китая · S&amp;OE-цикл</span>
     <h1 style="margin-top:10px">Решаем, куда едет товар, когда уже знаем, где его купят</h1>
     <p>Контейнер из Китая всё равно проходит Новосибирск. «Стрелка» назначает регион там, за 5-7 дней до прибытия в хаб, по свежим продажам, и только если выгода больше надбавки за остановку.</p>
-    <div class="cta"><button class="btn accent" type="button" data-v="map">Открыть демо</button><button class="btn" type="button" data-v="calc">Проверить выгоду</button><button class="btn" type="button" data-v="tariffs">Тарифы</button></div>
+    <div class="cta"><button class="btn accent" type="button" data-start-tour>Запустить демо для жюри · 90 сек</button><button class="btn" type="button" data-v="map">Открыть все контейнеры</button><button class="btn" type="button" data-v="calc">Проверить выгоду</button><button class="btn" type="button" data-v="tariffs">Тарифы</button></div>
   </div>
   <div>${mapSVG({bare:true})}</div>
 </section>
