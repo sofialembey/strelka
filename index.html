@@ -1,4 +1,17 @@
-<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}
+.demo-ribbon{margin:0 0 14px;padding:10px 14px;border:1px solid var(--line);border-left:4px solid var(--accent-strong);border-radius:10px;background:var(--surface);color:var(--muted);font-size:13px}
+.demo-ribbon b{color:var(--ink)}
+.install-app{position:fixed;right:16px;top:16px;z-index:70;border:0;border-radius:10px;padding:10px 14px;background:#e0702e;color:#fff;font:600 13px var(--f-body);box-shadow:var(--shadow)}
+</style>
+<meta name="description" content="Стрелка — демонстрационный S&OE-сервис управления импортными поставками из Китая.">
+<meta name="theme-color" content="#0f2d69">
+<meta name="application-name" content="Стрелка">
+<link rel="manifest" href="./manifest.webmanifest">
+<link rel="icon" type="image/svg+xml" href="./icons/strelka.svg">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Стрелка">
+</head><body>
 <title>Стрелка</title>
 <meta name="claude:viewport-fit-sides" content="cover">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -405,12 +418,13 @@ input[type=range]{width:100%;accent-color:var(--blue)}
   </aside>
   <div style="min-width:0">
     <header class="mhead"><div class="brand" id="brandTop"></div><div class="mh-r"><label class="sr" for="roleTop">Смотреть как</label><select class="role-sel" id="roleTop" data-role-sel></select><button class="bell" type="button" data-bell id="bellTop" aria-label="Уведомления"></button></div></header>
-    <main class="main" id="main"></main>
+    <main class="main" id="main"><div class="demo-ribbon"><b>Демонстрационный пилот.</b> Используются модельные данные. Изменения в интерфейсе не передаются в реальные учётные системы.</div></main>
   </div>
 </div>
 <nav class="tabbar" id="tabbar" aria-label="Разделы"></nav>
 <div id="overlay"></div>
 <div id="toastBox"></div>
+<button class="install-app" id="installApp" type="button" hidden>Установить приложение</button>
 
 <script>
 (function(){
@@ -450,7 +464,7 @@ document.getElementById('themeBtn').onclick=()=>{theme=themes[(themes.indexOf(th
 applyTheme();
 
 /* ---------- data ---------- */
-const TODAY=new Date(2026,9,23);
+const TODAY=new Date(); TODAY.setHours(0,0,0,0);
 const fmtD=d=>d.toLocaleDateString('ru-RU',{day:'numeric',month:'short'}).replace('.','');
 const addD=(d,n)=>new Date(d.getFullYear(),d.getMonth(),d.getDate()+Math.round(n));
 const rub=v=>v.toLocaleString('ru-RU',{maximumFractionDigits:1});
@@ -567,7 +581,7 @@ function guideHTML(){if(!G.on)return '';const st=[['s1','Откройте кон
 function refreshGuide(){const g=M.querySelector('.guide');if(g)g.outerHTML=guideHTML()}
 
 const M=document.getElementById('main');
-const head=(t,s)=>`<div class="top"><div><h1>${t}</h1>${s?`<p class="sub">${s}</p>`:''}</div><div class="top-r"><span class="chip-demo mob">Демо-данные</span><span class="today">Пятница, 23 октября 2026 · неделя 43</span><button class="bell" type="button" data-bell aria-label="Уведомления"></button></div></div>`;
+const head=(t,s)=>{const now=new Date();const day=now.toLocaleDateString('ru-RU',{weekday:'long',day:'numeric',month:'long',year:'numeric'});const d=new Date(Date.UTC(now.getFullYear(),now.getMonth(),now.getDate()));d.setUTCDate(d.getUTCDate()+4-(d.getUTCDay()||7));const y=new Date(Date.UTC(d.getUTCFullYear(),0,1));const week=Math.ceil((((d-y)/86400000)+1)/7);return `<div class="top"><div><h1>${t}</h1>${s?`<p class="sub">${s}</p>`:''}</div><div class="top-r"><span class="chip-demo mob">Демо-данные</span><span class="today">${day} · неделя ${week}</span><button class="bell" type="button" data-bell aria-label="Уведомления"></button></div></div>`;};
 
 /* ---------- map svg ---------- */
 function mapSVG(opt={}){
@@ -813,7 +827,7 @@ R.effect=()=>{if(DLOG.length)G.s3=true;return head('Эффект и KPI','Ваш
 </div>`};
 
 /* integrations */
-const INT=[['grid','1С:Управление торговлей','Остатки, заказы, продажи по филиалам','Подключено','p-routed','12 мин назад'],['rail','Оператор (ТрансКонтейнер / FESCO)','Статусы контейнеров по API, условие SLA','Подключено','p-routed','3 мин назад'],['doc','ЭДО','УПД между юрлицами группы, «Честный знак»','Подключено','p-routed','1 ч назад'],['agenda','Excel-загрузка брони','Для филиалов без доступа к сервису','Резерв','p-china','вчера'],['box','ЭТРАН (АСУ-АСУ)','Если сеть сама грузоотправитель','Не требуется','p-china','-']];
+const INT=[['grid','1С:Управление торговлей','Остатки, заказы, продажи по филиалам','Демо-статус','p-china','пример синхронизации'],['rail','Оператор (ТрансКонтейнер / FESCO)','Статусы контейнеров по API, условие SLA','Демо-статус','p-china','пример синхронизации'],['doc','ЭДО','УПД между юрлицами группы, «Честный знак»','Демо-статус','p-china','пример синхронизации'],['agenda','Excel-загрузка брони','Для филиалов без доступа к сервису','Резерв','p-china','вчера'],['box','ЭТРАН (АСУ-АСУ)','Если сеть сама грузоотправитель','Не требуется','p-china','-']];
 R.integrations=()=>head('Интеграции','«Стрелка» работает поверх учётной системы сети и ничего в ней не меняет.')+`<div class="card">${INT.map(r=>`<div class="int"><span class="ico">${ic(r[0],22)}</span><div style="min-width:0"><h3 style="font-size:15px">${r[1]}</h3><p style="font-size:13px;color:var(--muted)">${r[2]}</p></div><div style="text-align:right"><span class="pill ${r[4]}"><i></i>${r[3]}</span><p style="font-size:12px;color:var(--muted);margin-top:4px">${r[5]}</p></div></div>`).join('')}</div>`;
 
 /* tariffs */
@@ -826,6 +840,37 @@ R.tariffs=()=>head('Тарифы','Начните с платного пилот
 function render(){const body=(R[view]||R.home)();M.innerHTML=guideHTML()+body;updateBells()}
 const h0=(location.hash||'').replace('#','');if(R[h0])view=h0;else view=ROLES.find(r=>r[0]===role)[2];
 nav();render();
+})();
+</script>
+
+
+<script>
+/* PWA: install prompt + offline support */
+(() => {
+  if ('serviceWorker' in navigator) {
+    window.addEventListener('load', () => {
+      navigator.serviceWorker.register('./service-worker.js').catch(err => {
+        console.warn('Не удалось зарегистрировать Service Worker:', err);
+      });
+    });
+  }
+  let deferredPrompt = null;
+  const installButton = document.getElementById('installApp');
+  window.addEventListener('beforeinstallprompt', event => {
+    event.preventDefault();
+    deferredPrompt = event;
+    if (installButton) installButton.hidden = false;
+  });
+  installButton?.addEventListener('click', async () => {
+    if (!deferredPrompt) return;
+    deferredPrompt.prompt();
+    await deferredPrompt.userChoice;
+    deferredPrompt = null;
+    installButton.hidden = true;
+  });
+  window.addEventListener('appinstalled', () => {
+    if (installButton) installButton.hidden = true;
+  });
 })();
 </script>
 

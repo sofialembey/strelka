@@ -1,0 +1,21 @@
+{
+  "id": "./",
+  "name": "Стрелка — управление импортными поставками",
+  "short_name": "Стрелка",
+  "description": "Демонстрационный S&OE-сервис управления импортными поставками из Китая.",
+  "lang": "ru",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "any",
+  "background_color": "#f4f6fb",
+  "theme_color": "#0f2d69",
+  "icons": [
+    {
+      "src": "./icons/strelka.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}
