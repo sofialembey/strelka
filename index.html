@@ -793,6 +793,14 @@ body.welcome-mode{background:#081a3e;color:#fff;overflow-x:hidden}
 @keyframes wa-arrival-flash{0%{filter:brightness(1.65) saturate(1.35)}100%{filter:brightness(1) saturate(1)}}
 @keyframes wa-stage-flash{0%{filter:brightness(1.7) drop-shadow(0 0 12px rgba(92,233,224,.6))}100%{filter:brightness(1) drop-shadow(0 0 0 transparent)}}
 @media(prefers-reduced-motion:reduce){.wa-haptic-arrival .wa-route-map,.wa-haptic-stage .wa-route-map{animation:none}}
+
+/* Visual haptic pulse for iOS Safari and unsupported vibration APIs */
+.wa-route-map{transition:filter .18s ease}
+.wa-haptic-arrival .wa-route-map{filter:brightness(1.28) saturate(1.25) drop-shadow(0 0 14px rgba(86,226,226,.22))}
+.wa-haptic-stage .wa-route-map{filter:brightness(1.42) saturate(1.35) drop-shadow(0 0 18px rgba(86,226,226,.35))}
+.wa-haptic-stage .wa-route-point{animation:wa-point-tap .42s ease-out}
+@keyframes wa-point-tap{0%{opacity:.7}45%{opacity:1;filter:drop-shadow(0 0 13px rgba(105,238,235,.95))}100%{opacity:1}}
+@media(prefers-reduced-motion:reduce){.wa-route-map{transition:none}.wa-haptic-stage .wa-route-point{animation:none}}
 </style>
 
 
@@ -1440,6 +1448,43 @@ nav();render();
       root.classList.add('wa-haptic-stage');
       window.setTimeout(() => root.classList.remove('wa-haptic-stage'), 500);
     });
+  });
+})();
+</script>
+
+<script>
+/* Subtle UI sound fallback for browsers without native haptics (not autoplayed) */
+(() => {
+  const root = document.querySelector('.welcome-aurora');
+  if (!root) return;
+  let audioContext = null;
+  const playTick = (finalStage) => {
+    const AudioCtx = window.AudioContext || window.webkitAudioContext;
+    if (!AudioCtx) return;
+    try {
+      audioContext = audioContext || new AudioCtx();
+      if (audioContext.state === 'suspended') audioContext.resume();
+      const now = audioContext.currentTime;
+      const tones = finalStage ? [560, 760] : [620];
+      tones.forEach((frequency, index) => {
+        const start = now + index * .075;
+        const oscillator = audioContext.createOscillator();
+        const gain = audioContext.createGain();
+        oscillator.type = 'sine';
+        oscillator.frequency.setValueAtTime(frequency, start);
+        oscillator.frequency.exponentialRampToValueAtTime(frequency * .72, start + .055);
+        gain.gain.setValueAtTime(.0001, start);
+        gain.gain.exponentialRampToValueAtTime(.035, start + .008);
+        gain.gain.exponentialRampToValueAtTime(.0001, start + .07);
+        oscillator.connect(gain);
+        gain.connect(audioContext.destination);
+        oscillator.start(start);
+        oscillator.stop(start + .075);
+      });
+    } catch (_) { /* Audio is an enhancement; interaction remains fully usable without it. */ }
+  };
+  root.querySelectorAll('[data-wm-step]').forEach((step, index) => {
+    step.addEventListener('click', () => playTick(index === 2));
   });
 })();
 </script>
