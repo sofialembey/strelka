@@ -11,7 +11,15 @@
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="apple-mobile-web-app-title" content="Стрелка">
-</head><body class="welcome-mode">
+<style>
+.scenario{margin:16px 0;padding:14px;border:1px solid var(--line);border-radius:14px;background:var(--surface)}
+.scenario .row{display:flex;justify-content:space-between;gap:12px;margin:12px 0 5px;font-size:13px}
+.scenario input[type=range]{width:100%;accent-color:var(--accent)}
+.annual{display:flex;align-items:baseline;gap:12px;flex-wrap:wrap;margin-top:16px}
+.annual b{font-size:clamp(25px,4vw,34px);color:var(--accent)}
+.annual span,.scenario .note{font-size:12px;color:var(--muted)}
+@media(max-width:520px){.answer .kgrid{grid-template-columns:1fr!important}.annual{display:block}.annual span{display:block}}
+</style></head><body class="welcome-mode">
 <title>Стрелка — управление импортными поставками</title>
 <meta name="claude:viewport-fit-sides" content="cover">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -1263,7 +1271,7 @@ M.addEventListener('click',e=>{const br=e.target.closest('[data-br]');if(br){myB
   const v=e.target.closest('[data-veto]');if(v){const c=C[+v.dataset.veto];c.veto=true;c.log.push([`Вето филиала ${c.planned}: вопрос на S&OE-сессии`,'сегодня']);nav();render();toast('Вето отправлено на S&OE-сессию',{l:'Сессия',v:'agenda'})}});
 
 /* calc */
-const CV={v:3.5,d:8,u:25,m:35,h:84};
+const CV={v:3.5,d:8,u:25,m:35,h:84,n:500,p:15};
 const RULE=[6,4.63,3.52,2.61,1.89,1.3,.78,.39,.13,-.13,-.33], ALL=[6,4.5,2.94,1.37,-.13,-1.7,-3.26,-4.76,-6.33,-7.83,-9.39];
 function calcChart(h){const W=520,H=230,l=40,r=12,t=14,b=34,x=v=>l+v/200*(W-l-r),y=v=>t+(6-v)/16*(H-t-b);
   const line=a=>a.map((v,i)=>`${x(i*20).toFixed(1)},${y(v).toFixed(1)}`).join(' ');
@@ -1276,13 +1284,15 @@ function calcChart(h){const W=520,H=230,l=40,r=12,t=14,b=34,x=v=>l+v/200*(W-l-r)
   s+=`<text x="${x(170)}" y="${y(1.2)}" text-anchor="middle" class="t-acc">с правилом</text><text x="${x(150)}" y="${y(-5.2)}" text-anchor="middle">без правила</text>`;
   s+=`<text x="${(l+W-r)/2}" y="${H-0}" text-anchor="middle">надбавка хаба, тыс. ₽ на контейнер</text>`;
   return s+'</svg>'}
-const calcOut=()=>{const ben=Math.round(CV.v*1000*CV.d/100*(CV.u+CV.m)/100);const ok=ben>CV.h;
+const calcOut=()=>{const ben=Math.round(CV.v*1000*CV.d/100*(CV.u+CV.m)/100);const ok=ben>CV.h;const net=Math.max(0,ben-CV.h);const annual=net*CV.n*CV.p/100/1000;
  return `<div class="lbl">Решение по контейнеру</div><div class="big ${ok?'go':'stay'}">${ok?'Переадресовать':'Оставить по плану'}</div>
- <p style="font-size:16px"><b class="num">${ben} тыс. ₽</b> выгода ${ok?'больше':'меньше'} надбавки <b class="num">${CV.h} тыс. ₽</b> на <b class="num">${Math.abs(ben-CV.h)} тыс. ₽</b></p>
- <div class="formula">Выгода = стоимость × доля излишка × (уценка + потерянная маржа) = ${rub(CV.v)} млн × ${CV.d} % × ${CV.u+CV.m} %. Упрощённая формула для демонстрации; в модели команды учитываются ещё стоимость запаса и встречные перевозки.</div>
- <div><div class="lbl" style="margin:6px 0 4px">Эффект сети за год, млн ₽</div>${calcChart(CV.h)}<p style="font-size:12.5px;color:var(--muted)">Без правила сеть уходит в минус при надбавке 78 тыс. ₽, с правилом остаётся в плюсе до 170 тыс. ₽. Финансовая модель команды, сеть на 500 контейнеров.</p></div>`};
+ <div class="kgrid" style="grid-template-columns:repeat(3,minmax(0,1fr));margin:12px 0"><div class="card kc"><span class="lbl">Потенциальная выгода</span><span class="v num">${ben}</span><span class="t">тыс. ₽</span></div><div class="card kc"><span class="lbl">Надбавка хаба</span><span class="v num">${CV.h}</span><span class="t">тыс. ₽</span></div><div class="card kc"><span class="lbl">Чистый эффект</span><span class="v num ${ok?'acc':''}">${ok?'+'+net:'0'}</span><span class="t">тыс. ₽ на контейнер</span></div></div>
+ <p style="font-size:14px">${ok?'Переадресация экономически оправдана: выгода превышает надбавку.':'Переадресация не окупает надбавку. Рациональное решение — оставить контейнер по плану.'}</p>
+ <div class="formula">Выгода = стоимость товара × доля излишка × (уценка + потерянная маржа) = ${rub(CV.v)} млн × ${CV.d} % × ${CV.u+CV.m} %. Чистый эффект = max(0, выгода − надбавка). Упрощённая демонстрационная формула; она не заменяет полную финансовую модель команды.</div>
+ <div class="scenario"><div class="lbl">Сценарный эффект сети за год</div><div class="row"><label for="r-n">Контейнеров в год</label><output id="o-n" class="num">${CV.n}</output></div><input type="range" id="r-n" min="100" max="1000" step="50" value="${CV.n}" data-k="n" data-u=""><div class="row"><label for="r-p">Доля контейнеров, подходящих для переадресации</label><output id="o-p" class="num">${CV.p} %</output></div><input type="range" id="r-p" min="0" max="50" step="1" value="${CV.p}" data-k="p" data-u=" %"><div class="annual"><b class="num">${rub(annual)} млн ₽</b><span>ориентир чистого эффекта от переадресаций в год</span></div><p class="note">Доля подходящих контейнеров — сценарное допущение, а не измеренный показатель. Расчёт масштабирует экономику одного контейнера; не включает сокращение запасов, дефицита и встречных перевозок.</p></div>
+ <div><div class="lbl" style="margin:14px 0 4px">Чувствительность к надбавке хаба</div>${calcChart(CV.h)}<p style="font-size:12.5px;color:var(--muted)">График показывает модельный годовой эффект сети при разных уровнях надбавки. Для управленческого решения используйте фактические тарифы и данные филиалов.</p></div>`};
 R.calc=()=>head('Калькулятор выгоды','Правило «Стрелки»: переадресовать контейнер, только если выгода больше надбавки за остановку в хабе.')+`<div class="calc"><div class="card pad">
-${[['v','Стоимость товара в контейнере',1,6,0.1,' млн ₽','В модели 3,5 млн ₽'],['d','Доля партии, которая станет излишком в плановом регионе',0,30,1,' %','Разница спроса между филиалами'],['u','Уценка и хранение излишка',10,40,1,' %','Скидка, чтобы распродать остаток'],['m','Маржа, потерянная на пустой полке',20,50,1,' %','Валовая маржа сети, в модели 35 %'],['h','Надбавка хаба',30,200,1,' тыс. ₽','В базе 84: тариф, терминал, брокер, простой']].map(([k,l,a,b,st,u,sm])=>`<div class="field"><div class="row"><label for="r-${k}">${l}</label><output id="o-${k}" class="num">${rub(CV[k])}${u}</output></div><input type="range" id="r-${k}" min="${a}" max="${b}" step="${st}" value="${CV[k]}" data-k="${k}" data-u="${u}"><small>${sm}</small></div>`).join('')}
+${[['v','Стоимость товара в контейнере',1,6,0.1,' млн ₽','В модели 3,5 млн ₽'],['d','Доля партии, которая станет излишком в плановом регионе',0,30,1,' %','Разница спроса между филиалами'],['u','Уценка и хранение излишка',10,40,1,' %','Скидка, чтобы распродать остаток'],['m','Маржа, потерянная на пустой полке',20,50,1,' %','Валовая маржа сети, в модели 35 %'],['h','Надбавка хаба',30,200,1,' тыс. ₽','В базе 84: тариф, терминал, брокер, простой']]}.map(([k,l,a,b,st,u,sm])=>`<div class="field"><div class="row"><label for="r-${k}">${l}</label><output id="o-${k}" class="num">${rub(CV[k])}${u}</output></div><input type="range" id="r-${k}" min="${a}" max="${b}" step="${st}" value="${CV[k]}" data-k="${k}" data-u="${u}"><small>${sm}</small></div>`).join('')}
 </div><div class="card answer" id="calcOut">${calcOut()}</div></div>`;
 M.addEventListener('input',e=>{const r=e.target.closest('input[type=range][data-k]');if(r){CV[r.dataset.k]=+r.value;document.getElementById('o-'+r.dataset.k).textContent=rub(+r.value)+r.dataset.u;document.getElementById('calcOut').innerHTML=calcOut()}});
 
