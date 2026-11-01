@@ -642,56 +642,187 @@ body.welcome-mode{background:#081a3e;color:#fff;overflow-x:hidden}
 }
 .wm-cta:hover{background:linear-gradient(115deg,#ff9b60,#e87839 48%,#b95b35);box-shadow:inset 0 1px 0 rgba(255,255,255,.42),0 0 42px rgba(240,138,75,.48),0 14px 34px rgba(0,0,0,.2)}
 @media(prefers-reduced-motion:reduce){.wm-orb:before,.wm-orb:after{backdrop-filter:none;-webkit-backdrop-filter:none}}
+
+/* Aurora Logistics — cinematic liquid glass landing */
+.welcome-aurora{position:relative;isolation:isolate;min-height:100svh;overflow:hidden;background:#030711;color:#f6f8ff}
+.welcome-aurora:before{content:"";position:absolute;inset:0;z-index:-2;background:radial-gradient(ellipse at 73% 18%,rgba(28,72,160,.28),transparent 42%),linear-gradient(115deg,#030711 0%,#061022 48%,#080719 100%)}
+.welcome-aurora:after{content:"";position:absolute;inset:0;z-index:-1;pointer-events:none;opacity:.17;background-image:linear-gradient(rgba(164,193,255,.12) 1px,transparent 1px),linear-gradient(90deg,rgba(164,193,255,.12) 1px,transparent 1px);background-size:54px 54px;mask-image:linear-gradient(to bottom,black,transparent 88%)}
+.wa-wrap{position:relative;z-index:1;width:min(1180px,calc(100% - 64px))}
+.wa-aurora{position:absolute;z-index:-1;pointer-events:none;filter:blur(55px);border-radius:50%;mix-blend-mode:screen;will-change:transform}
+.wa-aurora-cyan{width:590px;height:400px;right:4%;top:-165px;background:radial-gradient(ellipse,rgba(0,232,222,.75),rgba(0,125,220,.3) 42%,transparent 72%);animation:wa-aurora-cyan 14s ease-in-out infinite alternate}
+.wa-aurora-violet{width:620px;height:480px;right:-180px;top:5%;background:radial-gradient(ellipse,rgba(126,25,255,.72),rgba(84,30,205,.28) 48%,transparent 72%);animation:wa-aurora-violet 17s ease-in-out infinite alternate}
+.wa-aurora-amber{width:420px;height:320px;left:-210px;bottom:-120px;background:radial-gradient(ellipse,rgba(255,167,69,.55),rgba(240,91,79,.18) 48%,transparent 72%);animation:wa-aurora-amber 18s ease-in-out infinite alternate}
+@keyframes wa-aurora-cyan{to{transform:translate(-90px,100px) scale(1.15)}}
+@keyframes wa-aurora-violet{to{transform:translate(-130px,85px) scale(.92)}}
+@keyframes wa-aurora-amber{to{transform:translate(120px,-70px) scale(1.12)}}
+.wa-grid{position:absolute;z-index:-1;inset:0;pointer-events:none;background:radial-gradient(ellipse at 68% 52%,rgba(21,75,145,.18),transparent 42%)}
+.wa-header{height:82px;border-color:rgba(211,229,255,.13)}
+.wa-header-tag{font:500 9px var(--f-mono);letter-spacing:.15em;color:#a7bddf;display:flex;align-items:center;gap:9px}
+.wa-header-tag i,.wa-demo-pill i{width:6px;height:6px;background:#58e5dc;border-radius:50%;box-shadow:0 0 12px #58e5dc}
+.wa-hero{display:grid;grid-template-columns:.9fr 1.1fr;align-items:center;gap:52px;padding:76px 0 70px;min-height:600px}
+.wa-copy{position:relative;z-index:2}
+.wa-eyebrow{font:500 9px var(--f-mono);letter-spacing:.16em;color:#9db6d9;display:flex;align-items:center;gap:10px;margin-bottom:26px}
+.wa-eyebrow span{width:22px;height:1px;background:#56e2df;box-shadow:0 0 10px #56e2df}
+.wa-copy h1{font:700 clamp(42px,5.4vw,68px)/1.08 var(--f-display);letter-spacing:-.065em;margin:0 0 22px;color:#fff}
+.wa-copy h1 em{font-style:normal;background:linear-gradient(95deg,#6df3e8 0%,#78bfff 42%,#c19aff 82%);background-clip:text;-webkit-background-clip:text;color:transparent;filter:drop-shadow(0 0 20px rgba(98,161,255,.2))}
+.wa-lead{max-width:450px;color:#afbed7;font-size:16px;line-height:1.7;margin:0 0 30px}
+.wa-cta{background:linear-gradient(110deg,#f39a55,#d86b3d 55%,#8f54be);border:1px solid rgba(255,255,255,.34);box-shadow:inset 0 1px 0 rgba(255,255,255,.38),0 0 34px rgba(106,111,255,.24),0 12px 36px rgba(0,0,0,.3)}
+.wa-cta:hover{background:linear-gradient(110deg,#ffad6b,#e77d4d 55%,#a76bd4);box-shadow:0 0 45px rgba(91,208,228,.35),0 12px 36px rgba(0,0,0,.3)}
+.wa-caption{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-top:26px;color:#8195b5;font:9px var(--f-mono);letter-spacing:.04em}
+.wa-caption b{color:#62dcd9;font-size:12px}
+.wa-caption-line{width:22px;height:1px;background:#e89a62;margin-right:4px}
+.wa-stage{position:relative;min-width:0;padding:28px 12px 36px}
+.wa-light-trail{position:absolute;z-index:-1;height:2px;left:-15%;right:-15%;background:linear-gradient(90deg,transparent,#168bff,#5ce9e2,#a65aff,transparent);filter:blur(2px);opacity:.75;transform:rotate(-15deg);box-shadow:0 0 15px #268cff,0 0 34px rgba(49,155,255,.65)}
+.wa-trail-one{top:47%;animation:wa-trail 8s ease-in-out infinite alternate}
+.wa-trail-two{top:62%;transform:rotate(13deg);opacity:.5;animation:wa-trail 11s ease-in-out infinite alternate-reverse}
+@keyframes wa-trail{to{transform:translateX(35px) rotate(-10deg);opacity:1}}
+.wa-glass-panel{position:relative;padding:23px 24px 16px;border:1px solid rgba(201,224,255,.32);background:linear-gradient(140deg,rgba(205,227,255,.13),rgba(49,91,151,.12) 30%,rgba(5,14,32,.68) 78%);backdrop-filter:blur(26px) saturate(175%);-webkit-backdrop-filter:blur(26px) saturate(175%);box-shadow:inset 1px 1px 0 rgba(255,255,255,.24),inset -1px -1px 0 rgba(255,255,255,.07),0 28px 85px rgba(0,0,0,.48),0 0 55px rgba(53,134,255,.16);clip-path:polygon(0 0,89% 0,100% 13%,100% 100%,11% 100%,0 88%)}
+.wa-glass-panel:before{content:"";position:absolute;inset:0;pointer-events:none;background:linear-gradient(125deg,rgba(255,255,255,.15),transparent 20%,transparent 66%,rgba(86,197,255,.1));}
+.wa-panel-corner{position:absolute;width:40px;height:40px;border-color:rgba(111,218,255,.6);border-style:solid;opacity:.75;pointer-events:none}
+.wa-corner-tl{top:0;left:0;border-width:1px 0 0 1px}
+.wa-corner-br{bottom:0;right:0;border-width:0 1px 1px 0}
+.wa-panel-head{position:relative;z-index:1;display:flex;justify-content:space-between;align-items:center}
+.wa-panel-overline{display:block;color:#7f9ec8;font:9px var(--f-mono);letter-spacing:.15em;margin-bottom:6px}
+.wa-panel-head b{font:600 17px var(--f-display);color:#f1f6ff}
+.wa-demo-pill{display:flex;align-items:center;gap:7px;padding:7px 10px;border:1px solid rgba(98,220,216,.35);border-radius:99px;color:#8ce9e0;font:9px var(--f-mono);letter-spacing:.1em;background:rgba(30,120,133,.12)}
+.wa-route-map{position:relative;z-index:1;margin:12px 0 0;background:radial-gradient(ellipse at 48% 55%,rgba(31,91,158,.18),transparent 65%)}
+.wa-route-map svg{display:block;width:100%;height:auto;overflow:visible}
+.wa-route-dash{animation:wa-dash 16s linear infinite}
+@keyframes wa-dash{to{stroke-dashoffset:-240}}
+.wa-route-point{filter:drop-shadow(0 0 9px currentColor)}
+.wa-route-legend{position:relative;z-index:1;display:flex;gap:17px;flex-wrap:wrap;color:#8da4c9;font:8px var(--f-mono);letter-spacing:.04em;margin:-2px 0 15px}
+.wa-route-legend span{display:flex;align-items:center;gap:6px}
+.wa-route-legend i{width:6px;height:6px;border-radius:50%}
+.legend-orange{background:#ffad6b;box-shadow:0 0 8px #ffad6b}.legend-cyan{background:#64e9e0;box-shadow:0 0 8px #64e9e0}.legend-violet{background:#b19bff;box-shadow:0 0 8px #b19bff}
+.wa-panel-divider{height:1px;background:linear-gradient(90deg,transparent,rgba(178,210,255,.35),transparent);margin:0 0 4px}
+.wa-stages{position:relative;z-index:1;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}
+.wa-stages .wm-step{display:flex;align-items:flex-start;gap:8px;padding:12px 7px;border-top:0;border-radius:8px;min-width:0}
+.wa-stages .wm-step>span{font:9px var(--f-mono);color:#78bfcf}
+.wa-stages .wm-step div{min-width:0}
+.wa-stages .wm-step b{font-size:10px;white-space:nowrap}
+.wa-stages .wm-step small{font-size:8px;line-height:1.4}
+.wa-stages .wm-step i{margin-left:auto;font-size:11px}
+.wa-panel-foot{position:relative;z-index:1;display:flex;justify-content:space-between;gap:8px;border-top:1px solid rgba(188,215,255,.13);padding-top:12px;color:#6e86aa;font:8px var(--f-mono);letter-spacing:.08em}
+.wa-float{position:absolute;z-index:2;display:flex;align-items:center;gap:10px;padding:10px 13px;border:1px solid rgba(212,230,255,.25);background:linear-gradient(135deg,rgba(206,228,255,.18),rgba(18,42,80,.48));backdrop-filter:blur(22px) saturate(170%);-webkit-backdrop-filter:blur(22px) saturate(170%);box-shadow:inset 0 1px 0 rgba(255,255,255,.2),0 10px 32px rgba(0,0,0,.25);border-radius:10px}
+.wa-float-top{right:-15px;top:0;animation:wa-float 7s ease-in-out infinite}
+.wa-float-bottom{left:-16px;bottom:5px;animation:wa-float 8s ease-in-out infinite reverse}
+@keyframes wa-float{50%{transform:translateY(-9px)}}
+.wa-float small{display:block;font:8px var(--f-mono);color:#9bb5d7;letter-spacing:.1em}
+.wa-float b{display:block;font-size:10px;color:#f0f6ff;margin-top:3px}
+.wa-float-icon{display:grid;place-items:center;width:26px;height:26px;border-radius:7px;color:#9bf2e9;background:rgba(67,202,198,.14);font-size:16px}
+.wa-pulse-dot{width:7px;height:7px;background:#62e6d2;border-radius:50%;box-shadow:0 0 12px #62e6d2;animation:wm-blink 1.8s ease-in-out infinite}
+.wa-capabilities{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;border-top:1px solid rgba(205,225,255,.17);border-bottom:1px solid rgba(205,225,255,.17);padding:22px 0}
+.wa-capabilities>div{display:grid;grid-template-columns:28px 1fr;gap:3px 10px}
+.wa-capabilities span{grid-row:span 2;color:#69deda;font:10px var(--f-mono)}
+.wa-capabilities b{font-size:12px;color:#e9f2ff}
+.wa-capabilities small{font-size:10px;color:#8299bb}
+.wa-footer{border-top:0;margin-top:0;color:#7185a6}
+.wa-footer b{color:#9b8cff}
+@media(max-width:900px){
+ .wa-hero{grid-template-columns:1fr;gap:34px;padding:55px 0 48px}
+ .wa-copy h1{max-width:650px}
+ .wa-stage{width:min(100%,650px);margin:0 auto}
+}
+@media(max-width:620px){
+ .wa-wrap{width:calc(100% - 34px)}
+ .wa-header{height:68px}
+ .wa-header-tag{font-size:7px;letter-spacing:.08em}
+ .wa-mark{width:32px;height:32px}
+ .wa-hero{padding:44px 0 38px;gap:27px}
+ .wa-eyebrow{font-size:8px;line-height:1.5}
+ .wa-copy h1{font-size:clamp(39px,10.4vw,53px);line-height:1.12}
+ .wa-lead{font-size:14px;line-height:1.65}
+ .wa-cta{width:100%;justify-content:center}
+ .wa-caption{font-size:8px;line-height:1.8}
+ .wa-stage{padding:18px 0 30px}
+ .wa-glass-panel{padding:17px 13px 13px;clip-path:polygon(0 0,91% 0,100% 10%,100% 100%,9% 100%,0 90%)}
+ .wa-panel-head b{font-size:14px}
+ .wa-route-legend{gap:9px;font-size:7px}
+ .wa-stages{gap:2px}
+ .wa-stages .wm-step{gap:5px;padding:10px 4px}
+ .wa-stages .wm-step b{font-size:9px}
+ .wa-stages .wm-step small{font-size:7px}
+ .wa-panel-foot{font-size:6px}
+ .wa-float-top{right:-4px;top:-8px;transform:scale(.88);transform-origin:top right}
+ .wa-float-bottom{left:-4px;bottom:0;transform:scale(.88);transform-origin:bottom left}
+ .wa-capabilities{grid-template-columns:1fr;gap:14px;padding:18px 0}
+ .wa-footer{font-size:9px;line-height:1.5}
+}
+@media(prefers-reduced-motion:reduce){
+ .wa-aurora,.wa-route-dash,.wa-float,.wa-pulse-dot{animation:none!important}
+}
 </style>
 
 
-<section class="welcome welcome-minimal" id="welcome">
-  <div class="wm-orb wm-orb-a" aria-hidden="true"></div>
-  <div class="wm-orb wm-orb-b" aria-hidden="true"></div>
-  <div class="wm-orb wm-orb-c" aria-hidden="true"></div>
-  <div class="wm-orb wm-orb-d" aria-hidden="true"></div>
-
-  <div class="wm-wrap">
-    <header class="wm-header">
+<section class="welcome welcome-minimal welcome-aurora" id="welcome">
+  <div class="wa-aurora wa-aurora-cyan" aria-hidden="true"></div>
+  <div class="wa-aurora wa-aurora-violet" aria-hidden="true"></div>
+  <div class="wa-aurora wa-aurora-amber" aria-hidden="true"></div>
+  <div class="wa-grid" aria-hidden="true"></div>
+  <div class="wm-wrap wa-wrap">
+    <header class="wm-header wa-header">
       <a class="wm-brand" href="#welcome" aria-label="Стрелка — главная">
         <span class="wm-mark"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 17h6l4-6 4 3 4-7"/><path d="M16 7h5v5"/></svg></span>
         <span><b>СТРЕЛКА</b><small>Управление поставками</small></span>
       </a>
-      <span class="wm-demo">Интерактивное демо</span>
+      <span class="wa-header-tag"><i></i> ЦИФРОВАЯ ЛОГИСТИКА · S&OE</span>
     </header>
 
-    <main class="wm-main">
-      <div class="wm-copy">
-        <div class="wm-kicker">Цифровая логистика · S&OE</div>
-        <h1>Управляйте поставками <em>в одном окне.</em></h1>
-        <p class="wm-lead">«Стрелка» помогает видеть движение контейнеров, планировать распределение товаров и принимать решения по филиалам.</p>
-        <button class="wm-cta" id="enterDemo" type="button">Открыть демо <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button>
-        <p class="wm-note">Пилотный сценарий: поставка из Китая через Забайкальск в филиалы сети.</p>
+    <main class="wa-hero">
+      <div class="wa-copy">
+        <div class="wa-eyebrow"><span></span> ЕДИНАЯ СИСТЕМА УПРАВЛЕНИЯ ПОСТАВКАМИ</div>
+        <h1>Движение<br>груза. <em>Под контролем.</em></h1>
+        <p class="wa-lead">От контейнера в пути до распределения по филиалам — вся цепочка поставки в одном цифровом пространстве.</p>
+        <button class="wm-cta wa-cta" id="enterDemo" type="button">Исследовать платформу <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button>
+        <div class="wa-caption"><span class="wa-caption-line"></span><span>ПИЛОТНЫЙ СЦЕНАРИЙ</span> Китай <b>→</b> Забайкальск <b>→</b> Новосибирск <b>→</b> филиалы</div>
       </div>
-      <div class="wm-flow" aria-label="Интерактивная схема этапов поставки">
-        <div class="wm-flow-top"><div class="wm-flow-title">Цифровой контур поставки</div><span class="wm-live"><i></i> DEMO MODE</span></div>
-        <div class="wm-route-visual" aria-hidden="true">
-          <div class="wm-route-track"></div><div class="wm-route-pulse"></div>
-          <span class="wm-route-node n1"></span><span class="wm-route-node n2"></span><span class="wm-route-node n3"></span>
-          <span class="wm-route-caption c1">CN</span><span class="wm-route-caption c2">HUB</span><span class="wm-route-caption c3">RU</span>
+
+      <div class="wa-stage">
+        <div class="wa-light-trail wa-trail-one"></div><div class="wa-light-trail wa-trail-two"></div>
+        <div class="wa-glass-panel">
+          <div class="wa-panel-corner wa-corner-tl"></div><div class="wa-panel-corner wa-corner-br"></div>
+          <div class="wa-panel-head">
+            <div><span class="wa-panel-overline">SUPPLY CHAIN / 001</span><b>Маршрут поставки</b></div>
+            <span class="wa-demo-pill"><i></i> DEMO</span>
+          </div>
+          <div class="wa-route-map">
+            <svg viewBox="0 0 560 230" role="img" aria-label="Схема маршрута поставки из Китая через Забайкальск и Новосибирск к филиалам">
+              <defs>
+                <linearGradient id="wa-route-gradient" x1="0" x2="1"><stop offset="0" stop-color="#ffb46d"/><stop offset=".48" stop-color="#51e4e0"/><stop offset="1" stop-color="#9b7cff"/></linearGradient>
+                <filter id="wa-route-glow"><feGaussianBlur stdDeviation="5" result="blur"/><feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+              </defs>
+              <path d="M38 157 C105 145 112 92 190 102 S280 168 350 125 S438 78 510 46" fill="none" stroke="rgba(149,185,255,.19)" stroke-width="2" stroke-dasharray="3 9"/>
+              <path d="M38 157 C105 145 112 92 190 102 S280 168 350 125 S438 78 510 46" fill="none" stroke="url(#wa-route-gradient)" stroke-width="3" stroke-linecap="round" stroke-dasharray="8 8" class="wa-route-dash" filter="url(#wa-route-glow)"/>
+              <path d="M350 125 Q390 180 430 194 M510 46 Q500 128 535 166 M510 46 Q460 116 470 194" fill="none" stroke="#8b9fff" stroke-opacity=".55" stroke-width="1.5" stroke-dasharray="4 7"/>
+              <g class="wa-route-point p1"><circle cx="38" cy="157" r="13" fill="#ffad6b" fill-opacity=".18"/><circle cx="38" cy="157" r="5" fill="#ffc18b" stroke="white" stroke-width="1.5"/></g>
+              <g class="wa-route-point p2"><circle cx="190" cy="102" r="13" fill="#55dedb" fill-opacity=".18"/><circle cx="190" cy="102" r="5" fill="#64e9e0" stroke="white" stroke-width="1.5"/></g>
+              <g class="wa-route-point p3"><circle cx="350" cy="125" r="13" fill="#61bfff" fill-opacity=".18"/><circle cx="350" cy="125" r="5" fill="#83caff" stroke="white" stroke-width="1.5"/></g>
+              <g class="wa-route-point p4"><circle cx="510" cy="46" r="16" fill="#9b7cff" fill-opacity=".2"/><circle cx="510" cy="46" r="6" fill="#b19bff" stroke="white" stroke-width="1.5"/></g>
+              <g fill="#dce9ff" font-family="Arial,sans-serif" font-size="11"><text x="22" y="185">КИТАЙ</text><text x="157" y="79">ЗАБАЙКАЛЬСК</text><text x="317" y="153">НОВОСИБИРСК</text><text x="467" y="24">ФИЛИАЛЫ</text></g>
+              <g fill="#91a9d4"><circle cx="430" cy="194" r="4"/><circle cx="535" cy="166" r="4"/><circle cx="470" cy="194" r="4"/></g>
+              <circle class="wa-traveller" cx="0" cy="0" r="5" fill="#fff" filter="url(#wa-route-glow)"><animateMotion dur="7s" repeatCount="indefinite" path="M38 157 C105 145 112 92 190 102 S280 168 350 125 S438 78 510 46"/></circle>
+            </svg>
+          </div>
+          <div class="wa-route-legend"><span><i class="legend-orange"></i> Отправление</span><span><i class="legend-cyan"></i> Транзит</span><span><i class="legend-violet"></i> Распределение</span></div>
+          <div class="wa-panel-divider"></div>
+          <div class="wa-stages">
+            <button class="wm-step is-active" type="button" data-wm-step="0" aria-pressed="true"><span>01</span><div><b>Поставка</b><small>Контейнеры в пути</small></div><i>↗</i></button>
+            <button class="wm-step" type="button" data-wm-step="1" aria-pressed="false"><span>02</span><div><b>Планирование</b><small>Маршрут и хаб</small></div><i>↗</i></button>
+            <button class="wm-step" type="button" data-wm-step="2" aria-pressed="false"><span>03</span><div><b>Филиалы</b><small>Распределение товара</small></div><i>✓</i></button>
+          </div>
+          <div class="wa-panel-foot"><span>ВИЗУАЛИЗАЦИЯ ЛОГИСТИЧЕСКОЙ ЦЕПОЧКИ</span><span>4.54 / PILOT</span></div>
         </div>
-        <button class="wm-step is-active" type="button" data-wm-step="0" aria-pressed="true"><span>01</span><div><b>Поставка</b><small>Контейнеры и статусы в пути</small></div><i>→</i></button>
-        <button class="wm-step" type="button" data-wm-step="1" aria-pressed="false"><span>02</span><div><b>Планирование</b><small>Маршрут и распределительный хаб</small></div><i>→</i></button>
-        <button class="wm-step" type="button" data-wm-step="2" aria-pressed="false"><span>03</span><div><b>Распределение</b><small>Поставка товара по филиалам</small></div><i>✓</i></button>
-        <div class="wm-flow-hint">Нажмите на этап, чтобы выделить его</div>
+        <div class="wa-float wa-float-top"><span class="wa-float-icon">↗</span><span><small>СКВОЗНОЙ КОНТРОЛЬ</small><b>От маршрута до филиала</b></span></div>
+        <div class="wa-float wa-float-bottom"><span class="wa-pulse-dot"></span><span><small>ИНТЕРАКТИВНЫЙ РЕЖИМ</small><b>Изучите этапы поставки</b></span></div>
       </div>
     </main>
 
-    <section class="wm-benefits" aria-label="Возможности платформы">
-      <div><span>01</span><b>Контроль поставок</b><small>Маршрут, сроки, контейнеры</small></div>
-      <div><span>02</span><b>Распределение</b><small>Планирование по филиалам</small></div>
-      <div><span>03</span><b>Экономика</b><small>Расчёт эффекта решений</small></div>
+    <section class="wa-capabilities">
+      <div><span>01</span><b>Видимость</b><small>Контейнеры и статусы</small></div>
+      <div><span>02</span><b>Координация</b><small>Планирование поставок</small></div>
+      <div><span>03</span><b>Эффективность</b><small>Экономика решений</small></div>
     </section>
-
-    <footer class="wm-footer">
-      <span>Проект команды <b>4.54</b></span>
-      <span>Демонстрационный пилот · Используются модельные данные</span>
-    </footer>
+    <footer class="wm-footer wa-footer"><span>Проект команды <b>4.54</b></span><span>Демонстрационный пилот · Используются модельные данные</span></footer>
   </div>
 </section>
 
