@@ -533,6 +533,47 @@ body.welcome-mode{background:#081a3e;color:#fff;overflow-x:hidden}
  .wm-benefits{grid-template-columns:1fr;gap:16px;padding:20px 0}
  .wm-footer{flex-direction:column;gap:7px;line-height:1.5}
 }
+
+/* Futuristic interactive welcome accents */
+.welcome-minimal{position:relative;isolation:isolate;background:radial-gradient(ellipse at 78% 35%,rgba(43,103,218,.2),transparent 38%),radial-gradient(ellipse at 14% 80%,rgba(224,112,46,.1),transparent 34%),#071735}
+.welcome-minimal:before{content:"";position:absolute;inset:0;z-index:-1;pointer-events:none;opacity:.16;background-image:linear-gradient(rgba(147,181,255,.22) 1px,transparent 1px),linear-gradient(90deg,rgba(147,181,255,.22) 1px,transparent 1px);background-size:46px 46px;mask-image:linear-gradient(to bottom,black,transparent 90%)}
+.welcome-minimal:after{content:"";position:absolute;z-index:-1;width:440px;height:440px;top:10%;right:-190px;border-radius:50%;background:rgba(54,111,235,.13);filter:blur(80px);animation:wm-ambient 9s ease-in-out infinite alternate;pointer-events:none}
+@keyframes wm-ambient{to{transform:translate(-90px,65px) scale(1.25);opacity:.65}}
+.wm-mark{box-shadow:0 0 0 1px rgba(255,255,255,.13),0 0 26px rgba(240,138,75,.35);transition:box-shadow .25s,transform .25s}
+.wm-brand:hover .wm-mark{transform:rotate(-7deg) scale(1.06);box-shadow:0 0 34px rgba(240,138,75,.55)}
+.wm-flow{position:relative;overflow:hidden;isolation:isolate;background:linear-gradient(145deg,rgba(22,49,101,.72),rgba(8,25,58,.88));border-color:rgba(135,174,255,.28);box-shadow:0 18px 65px rgba(0,0,0,.2),inset 0 1px rgba(255,255,255,.08);transition:transform .25s,border-color .25s}
+.wm-flow:before{content:"";position:absolute;inset:-60% 0 auto;height:65%;background:linear-gradient(180deg,transparent,rgba(105,160,255,.09),transparent);animation:wm-scan 6s linear infinite;pointer-events:none;z-index:-1}
+@keyframes wm-scan{to{transform:translateY(260%)}}
+.wm-flow-top{display:flex;align-items:center;justify-content:space-between;gap:10px}
+.wm-live{font:500 9px var(--f-mono);letter-spacing:.1em;color:#8fbcff;display:flex;align-items:center;gap:7px}
+.wm-live i{width:6px;height:6px;border-radius:50%;background:#63e6bd;box-shadow:0 0 10px #63e6bd;animation:wm-blink 1.8s ease-in-out infinite}
+@keyframes wm-blink{50%{opacity:.35;box-shadow:0 0 2px #63e6bd}}
+.wm-route-visual{height:82px;position:relative;margin:10px 2px 8px;overflow:hidden}
+.wm-route-track{position:absolute;left:7%;right:7%;top:40px;height:2px;background:linear-gradient(90deg,#f08a4b,#83b1ff,#63e6bd);box-shadow:0 0 12px rgba(105,161,255,.55)}
+.wm-route-pulse{position:absolute;top:35px;left:7%;width:12px;height:12px;border-radius:50%;background:#fff;box-shadow:0 0 0 4px rgba(240,138,75,.24),0 0 18px #f08a4b;animation:wm-travel 5s ease-in-out infinite}
+@keyframes wm-travel{0%,8%{left:7%;background:#f08a4b}45%{left:49%;background:#8eb7ff}90%,100%{left:86%;background:#63e6bd}}
+.wm-route-node{position:absolute;top:34px;width:14px;height:14px;border:2px solid #c4d8ff;border-radius:50%;background:#183b79;box-shadow:0 0 14px rgba(117,166,255,.45)}
+.wm-route-node.n1{left:7%}.wm-route-node.n2{left:49%}.wm-route-node.n3{right:7%;border-color:#63e6bd}
+.wm-route-caption{position:absolute;top:57px;font:9px var(--f-mono);color:#829bc8;letter-spacing:.08em}
+.wm-route-caption.c1{left:5%}.wm-route-caption.c2{left:46%}.wm-route-caption.c3{right:4%}
+.wm-step{position:relative;width:100%;text-align:left;color:inherit;background:transparent;border:0;border-top:1px solid rgba(255,255,255,.1);cursor:pointer;transition:background .2s,padding .2s}
+.wm-step:hover,.wm-step.is-active{background:linear-gradient(90deg,rgba(82,135,235,.16),transparent);padding-left:9px}
+.wm-step.is-active>span{color:#ffad79;text-shadow:0 0 12px rgba(240,138,75,.65)}
+.wm-step.is-active b{color:#fff}
+.wm-step.is-active i{color:#63e6bd;text-shadow:0 0 12px rgba(99,230,189,.55)}
+.wm-step:focus-visible{outline:2px solid #83b1ff;outline-offset:-2px;border-radius:8px}
+.wm-flow-hint{font-size:9px;color:#7189b6;text-align:right;margin-top:9px}
+.wm-cta{position:relative;overflow:hidden;box-shadow:0 0 0 1px rgba(255,255,255,.12),0 0 24px rgba(224,112,46,.26),0 10px 28px rgba(224,112,46,.16);transition:transform .2s,box-shadow .2s,background .2s}
+.wm-cta:after{content:"";position:absolute;top:-60%;bottom:-60%;left:-45%;width:25%;transform:skewX(-20deg);background:linear-gradient(90deg,transparent,rgba(255,255,255,.28),transparent);animation:wm-shine 4.5s ease-in-out infinite}
+@keyframes wm-shine{0%,55%{left:-45%}100%{left:130%}}
+.wm-cta:hover{transform:translateY(-2px);box-shadow:0 0 32px rgba(240,138,75,.48),0 12px 30px rgba(224,112,46,.22)}
+.wm-benefits>div{transition:transform .2s}
+.wm-benefits>div:hover{transform:translateY(-3px)}
+@media(max-width:700px){.wm-flow{box-shadow:0 12px 38px rgba(0,0,0,.22)}}
+@media(prefers-reduced-motion:reduce){
+ .welcome-minimal:after,.wm-flow:before,.wm-live i,.wm-route-pulse,.wm-cta:after{animation:none!important}
+ .wm-step,.wm-mark,.wm-cta,.wm-benefits>div{transition:none!important}
+}
 </style>
 
 
@@ -554,11 +595,17 @@ body.welcome-mode{background:#081a3e;color:#fff;overflow-x:hidden}
         <button class="wm-cta" id="enterDemo" type="button">Открыть демо <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button>
         <p class="wm-note">Пилотный сценарий: поставка из Китая через Забайкальск в филиалы сети.</p>
       </div>
-      <div class="wm-flow" aria-label="Этапы поставки">
-        <div class="wm-flow-title">Как работает «Стрелка»</div>
-        <div class="wm-step"><span>01</span><div><b>Поставка</b><small>Контейнеры и статусы в пути</small></div><i>→</i></div>
-        <div class="wm-step"><span>02</span><div><b>Планирование</b><small>Маршрут и распределительный хаб</small></div><i>→</i></div>
-        <div class="wm-step"><span>03</span><div><b>Распределение</b><small>Поставка товара по филиалам</small></div><i>✓</i></div>
+      <div class="wm-flow" aria-label="Интерактивная схема этапов поставки">
+        <div class="wm-flow-top"><div class="wm-flow-title">Цифровой контур поставки</div><span class="wm-live"><i></i> DEMO MODE</span></div>
+        <div class="wm-route-visual" aria-hidden="true">
+          <div class="wm-route-track"></div><div class="wm-route-pulse"></div>
+          <span class="wm-route-node n1"></span><span class="wm-route-node n2"></span><span class="wm-route-node n3"></span>
+          <span class="wm-route-caption c1">CN</span><span class="wm-route-caption c2">HUB</span><span class="wm-route-caption c3">RU</span>
+        </div>
+        <button class="wm-step is-active" type="button" data-wm-step="0" aria-pressed="true"><span>01</span><div><b>Поставка</b><small>Контейнеры и статусы в пути</small></div><i>→</i></button>
+        <button class="wm-step" type="button" data-wm-step="1" aria-pressed="false"><span>02</span><div><b>Планирование</b><small>Маршрут и распределительный хаб</small></div><i>→</i></button>
+        <button class="wm-step" type="button" data-wm-step="2" aria-pressed="false"><span>03</span><div><b>Распределение</b><small>Поставка товара по филиалам</small></div><i>✓</i></button>
+        <div class="wm-flow-hint">Нажмите на этап, чтобы выделить его</div>
       </div>
     </main>
 
@@ -1059,4 +1106,28 @@ nav();render();
 })();
 </script>
 
+
+<script>
+/* Interactive highlight for the three supply-chain stages */
+(() => {
+  const steps = [...document.querySelectorAll('[data-wm-step]')];
+  steps.forEach(step => step.addEventListener('click', () => {
+    steps.forEach(item => {
+      const active = item === step;
+      item.classList.toggle('is-active', active);
+      item.setAttribute('aria-pressed', String(active));
+    });
+  }));
+  const panel = document.querySelector('.wm-flow');
+  if (panel && window.matchMedia('(hover:hover) and (pointer:fine)').matches && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    panel.addEventListener('pointermove', event => {
+      const rect = panel.getBoundingClientRect();
+      const x = (event.clientX - rect.left) / rect.width - .5;
+      const y = (event.clientY - rect.top) / rect.height - .5;
+      panel.style.transform = 'perspective(900px) rotateY(' + (x * 3).toFixed(2) + 'deg) rotateX(' + (-y * 3).toFixed(2) + 'deg)';
+    });
+    panel.addEventListener('pointerleave', () => { panel.style.transform = ''; });
+  }
+})();
+</script>
 </body></html>
