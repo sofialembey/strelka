@@ -574,10 +574,38 @@ body.welcome-mode{background:#081a3e;color:#fff;overflow-x:hidden}
  .welcome-minimal:after,.wm-flow:before,.wm-live i,.wm-route-pulse,.wm-cta:after{animation:none!important}
  .wm-step,.wm-mark,.wm-cta,.wm-benefits>div{transition:none!important}
 }
+
+/* Ambient translucent glass spheres */
+.welcome-minimal{--wm-mx:0px;--wm-my:0px}
+.wm-orb{position:absolute;z-index:-1;pointer-events:none;border-radius:50%;will-change:transform;transform:translate3d(var(--orb-x,0px),var(--orb-y,0px),0);mix-blend-mode:screen}
+.wm-orb:before{content:"";position:absolute;inset:0;border-radius:inherit;border:1px solid rgba(190,216,255,.26);background:radial-gradient(circle at 29% 23%,rgba(255,255,255,.46),rgba(150,190,255,.16) 14%,rgba(78,126,225,.07) 48%,rgba(64,104,198,.015) 72%);box-shadow:inset 12px 12px 35px rgba(255,255,255,.09),inset -18px -20px 48px rgba(46,91,186,.16),0 0 55px rgba(80,135,245,.15);backdrop-filter:blur(2px)}
+.wm-orb:after{content:"";position:absolute;left:17%;top:13%;width:34%;height:13%;border-radius:50%;background:linear-gradient(90deg,transparent,rgba(255,255,255,.3),transparent);filter:blur(7px);transform:rotate(-28deg)}
+.wm-orb-a{width:310px;height:310px;right:-65px;top:95px;opacity:.68;animation:wm-float-a 15s ease-in-out infinite}
+.wm-orb-b{width:190px;height:190px;left:-76px;top:48%;opacity:.48;animation:wm-float-b 19s ease-in-out infinite}
+.wm-orb-c{width:112px;height:112px;right:27%;bottom:10%;opacity:.55;animation:wm-float-c 12s ease-in-out infinite}
+.wm-orb-d{width:54px;height:54px;right:12%;top:18%;opacity:.68;animation:wm-float-d 10s ease-in-out infinite}
+.wm-orb-a:before{background:radial-gradient(circle at 30% 22%,rgba(255,255,255,.48),rgba(110,164,255,.2) 18%,rgba(61,110,220,.08) 56%,rgba(61,110,220,.015) 76%);box-shadow:inset 10px 10px 34px rgba(255,255,255,.12),inset -20px -22px 48px rgba(55,104,211,.18),0 0 75px rgba(69,128,244,.22)}
+.wm-orb-b:before{background:radial-gradient(circle at 28% 24%,rgba(255,230,212,.4),rgba(240,138,75,.13) 22%,rgba(224,112,46,.035) 64%,transparent 78%);border-color:rgba(255,190,150,.2);box-shadow:inset 8px 8px 28px rgba(255,255,255,.08),0 0 65px rgba(224,112,46,.14)}
+@keyframes wm-float-a{0%,100%{margin-top:0;scale:1}50%{margin-top:32px;scale:1.06}}
+@keyframes wm-float-b{0%,100%{margin-top:0;scale:1}50%{margin-top:-34px;scale:.94}}
+@keyframes wm-float-c{0%,100%{margin-top:0;transform:translate3d(var(--orb-x,0px),var(--orb-y,0px),0)}50%{margin-top:-22px;transform:translate3d(var(--orb-x,0px),calc(var(--orb-y,0px) + 10px),0)}}
+@keyframes wm-float-d{0%,100%{transform:translate3d(var(--orb-x,0px),var(--orb-y,0px),0) scale(1)}50%{transform:translate3d(var(--orb-x,0px),calc(var(--orb-y,0px) - 12px),0) scale(1.12)}}
+@media(max-width:700px){
+ .wm-orb-a{width:220px;height:220px;right:-105px;top:110px;opacity:.52}
+ .wm-orb-b{width:145px;height:145px;left:-85px;top:54%;opacity:.38}
+ .wm-orb-c{width:80px;height:80px;right:8%;bottom:15%;opacity:.42}
+ .wm-orb-d{width:36px;height:36px;right:15%;top:14%}
+}
+@media(prefers-reduced-motion:reduce){.wm-orb{animation:none!important;transform:none!important}}
 </style>
 
 
 <section class="welcome welcome-minimal" id="welcome">
+  <div class="wm-orb wm-orb-a" aria-hidden="true"></div>
+  <div class="wm-orb wm-orb-b" aria-hidden="true"></div>
+  <div class="wm-orb wm-orb-c" aria-hidden="true"></div>
+  <div class="wm-orb wm-orb-d" aria-hidden="true"></div>
+
   <div class="wm-wrap">
     <header class="wm-header">
       <a class="wm-brand" href="#welcome" aria-label="Стрелка — главная">
@@ -1128,6 +1156,35 @@ nav();render();
     });
     panel.addEventListener('pointerleave', () => { panel.style.transform = ''; });
   }
+})();
+</script>
+
+<script>
+/* Gentle cursor parallax for ambient spheres */
+(() => {
+  const root = document.querySelector('.welcome-minimal');
+  if (!root || !window.matchMedia('(hover:hover) and (pointer:fine)').matches || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  const orbs = [...root.querySelectorAll('.wm-orb')];
+  let frame = 0;
+  root.addEventListener('pointermove', event => {
+    const rect = root.getBoundingClientRect();
+    const x = (event.clientX - rect.left) / rect.width - .5;
+    const y = (event.clientY - rect.top) / rect.height - .5;
+    if (frame) cancelAnimationFrame(frame);
+    frame = requestAnimationFrame(() => {
+      orbs.forEach((orb, index) => {
+        const depth = [22, -15, 34, -27][index] || 18;
+        orb.style.setProperty('--orb-x', (x * depth).toFixed(1) + 'px');
+        orb.style.setProperty('--orb-y', (y * depth).toFixed(1) + 'px');
+      });
+    });
+  }, {passive:true});
+  root.addEventListener('pointerleave', () => {
+    orbs.forEach(orb => {
+      orb.style.setProperty('--orb-x','0px');
+      orb.style.setProperty('--orb-y','0px');
+    });
+  });
 })();
 </script>
 </body></html>
