@@ -11,8 +11,8 @@
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="apple-mobile-web-app-title" content="Стрелка">
-</head><body>
-<title>Стрелка</title>
+</head><body class="welcome-mode">
+<title>Стрелка — управление импортными поставками</title>
 <meta name="claude:viewport-fit-sides" content="cover">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Golos+Text:wght@400;500;600;700&family=Unbounded:wght@500;700&family=JetBrains+Mono:wght@500&display=swap">
@@ -402,7 +402,160 @@ input[type=range]{width:100%;accent-color:var(--blue)}
   .brrow.st .actions{justify-content:flex-start}
   .mlabel{font-size:15px}
 }
+
+/* ---------- Welcome landing page ---------- */
+body.welcome-mode{background:#081a3e;color:#fff;overflow-x:hidden}
+.welcome-mode .app,.welcome-mode .tabbar,.welcome-mode #overlay,.welcome-mode #toastBox{display:none!important}
+.welcome-mode #installApp{display:none!important}
+.welcome{min-height:100svh;position:relative;isolation:isolate;overflow:hidden;background:radial-gradient(ellipse at 78% 22%,rgba(46,91,186,.34),transparent 34%),radial-gradient(ellipse at 12% 86%,rgba(224,112,46,.12),transparent 34%),#081a3e;color:#fff}
+.welcome:before{content:"";position:absolute;inset:0;z-index:-1;opacity:.22;background-image:linear-gradient(rgba(255,255,255,.07) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.07) 1px,transparent 1px);background-size:56px 56px;mask-image:linear-gradient(to bottom,black,transparent 88%)}
+.w-wrap{width:min(1180px,calc(100% - 56px));margin:0 auto}
+.w-header{height:82px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid rgba(255,255,255,.12)}
+.w-brand{display:flex;align-items:center;gap:12px;color:#fff;text-decoration:none}
+.w-brand-mark{width:38px;height:38px;border-radius:12px;background:#e0702e;display:grid;place-items:center;box-shadow:0 8px 28px rgba(224,112,46,.28)}
+.w-brand-mark svg{width:23px;height:23px}
+.w-brand-name{font:700 18px/1 var(--f-display);letter-spacing:-.04em}
+.w-brand-sub{font-size:10px;color:#aab9d8;margin-top:5px;letter-spacing:.12em;text-transform:uppercase}
+.w-head-right{display:flex;align-items:center;gap:18px;color:#aab9d8;font-size:12px}
+.w-demo-tag{display:inline-flex;align-items:center;gap:8px;border:1px solid rgba(255,255,255,.18);border-radius:999px;padding:8px 12px;color:#d9e4ff}
+.w-demo-tag:before{content:"";width:6px;height:6px;border-radius:50%;background:#f08a4b;box-shadow:0 0 0 4px rgba(240,138,75,.14)}
+.w-hero{display:grid;grid-template-columns:1.04fr .96fr;gap:54px;align-items:center;padding:82px 0 74px;min-height:570px}
+.w-kicker{display:inline-flex;align-items:center;gap:9px;color:#f5a16d;font-size:11px;font-weight:700;letter-spacing:.15em;text-transform:uppercase;margin-bottom:24px}
+.w-kicker:before{content:"";width:24px;height:1px;background:#f08a4b}
+.w-title{font:700 clamp(39px,5.2vw,66px)/1.09 var(--f-display);letter-spacing:-.065em;margin:0 0 24px;max-width:650px;text-wrap:balance}
+.w-title span{color:#f08a4b}
+.w-lead{font-size:17px;line-height:1.65;color:#bdcbe5;max-width:550px;margin:0 0 32px}
+.w-actions{display:flex;align-items:center;gap:14px;flex-wrap:wrap}
+.w-primary{appearance:none;border:0;border-radius:12px;background:#e0702e;color:#fff;padding:16px 22px;display:inline-flex;align-items:center;gap:15px;font:700 14px var(--f-body);cursor:pointer;box-shadow:0 12px 32px rgba(224,112,46,.25);transition:transform .2s,background .2s}
+.w-primary:hover{background:#ee8243;transform:translateY(-2px)}
+.w-primary svg{width:17px;height:17px}
+.w-secondary{color:#e0e8f8;text-decoration:none;font-size:13px;padding:12px 4px}
+.w-secondary:hover{color:#f08a4b}
+.w-note{margin-top:20px;color:#8295bb;font-size:11px;line-height:1.5}
+.w-visual{position:relative;min-width:0}
+.w-map-card{position:relative;border:1px solid rgba(185,205,245,.2);border-radius:24px;padding:22px;background:linear-gradient(145deg,rgba(28,57,115,.78),rgba(13,32,74,.88));box-shadow:0 28px 80px rgba(0,0,0,.26);overflow:hidden}
+.w-map-card:before{content:"";position:absolute;inset:0;background:radial-gradient(circle at 60% 35%,rgba(86,132,222,.2),transparent 55%);pointer-events:none}
+.w-map-head{display:flex;justify-content:space-between;align-items:center;position:relative;z-index:1}
+.w-map-label{font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:#91a8d5}
+.w-map-status{font-size:10px;color:#f6b58d;border:1px solid rgba(240,138,75,.3);border-radius:99px;padding:6px 9px}
+.w-route-svg{width:100%;height:auto;display:block;margin:8px 0 4px;position:relative;z-index:1}
+.w-route-line{stroke-dasharray:7 9;animation:w-dash 22s linear infinite}
+@keyframes w-dash{to{stroke-dashoffset:-320}}
+.w-map-foot{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;position:relative;z-index:1}
+.w-stop{border-top:1px solid rgba(255,255,255,.14);padding-top:10px;min-width:0}
+.w-stop b{display:block;color:#fff;font-size:11px;white-space:nowrap}
+.w-stop span{display:block;color:#8299c4;font-size:9px;margin-top:4px}
+.w-float{position:absolute;right:-20px;bottom:36px;background:#fff;color:#0f2d69;border-radius:14px;padding:13px 16px;box-shadow:0 16px 44px rgba(0,0,0,.22);min-width:166px}
+.w-float small{display:block;color:#73809a;font-size:9px;text-transform:uppercase;letter-spacing:.1em}
+.w-float b{display:block;font:700 22px var(--f-display);margin-top:5px}
+.w-float span{display:block;color:#177049;font-size:10px;margin-top:4px}
+.w-proof{border-top:1px solid rgba(255,255,255,.12);border-bottom:1px solid rgba(255,255,255,.12);padding:22px 0}
+.w-proof-inner{display:flex;align-items:center;justify-content:space-between;gap:18px;flex-wrap:wrap}
+.w-proof-label{font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:#8498bf}
+.w-proof-item{display:flex;align-items:center;gap:10px;color:#d5e0f5;font-size:12px}
+.w-proof-item svg{width:17px;height:17px;color:#f08a4b;flex:none}
+.w-section{padding:74px 0 88px}
+.w-section-top{display:flex;justify-content:space-between;align-items:end;gap:28px;margin-bottom:28px}
+.w-eyebrow{color:#f08a4b;font-size:10px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;margin-bottom:12px}
+.w-h2{font:700 clamp(25px,3vw,36px)/1.2 var(--f-display);letter-spacing:-.05em;margin:0;max-width:600px}
+.w-section-desc{font-size:13px;line-height:1.6;color:#a9b9d7;max-width:340px}
+.w-cards{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}
+.w-card{border:1px solid rgba(185,205,245,.15);border-radius:16px;background:rgba(255,255,255,.045);padding:22px;min-height:170px}
+.w-card-icon{width:38px;height:38px;display:grid;place-items:center;border-radius:11px;background:rgba(224,112,46,.13);color:#f08a4b;margin-bottom:20px}
+.w-card-icon svg{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
+.w-card h3{font-size:14px;margin:0 0 8px;color:#fff}
+.w-card p{font-size:12px;line-height:1.6;color:#9eafd0;margin:0}
+.w-bottom{display:flex;justify-content:space-between;align-items:center;gap:24px;border:1px solid rgba(240,138,75,.28);border-radius:20px;padding:26px 30px;background:linear-gradient(100deg,rgba(224,112,46,.12),rgba(46,91,186,.13))}
+.w-bottom h2{font:700 21px/1.25 var(--f-display);margin:0 0 7px;letter-spacing:-.04em}
+.w-bottom p{font-size:12px;color:#aebfdd;margin:0}
+.w-footer{padding:25px 0 30px;color:#7589b0;font-size:10px;display:flex;justify-content:space-between;gap:16px;border-top:1px solid rgba(255,255,255,.1);margin-top:54px}
+@media(max-width:900px){.w-hero{grid-template-columns:1fr;gap:42px;padding:62px 0 56px;min-height:auto}.w-visual{max-width:620px;width:100%;margin:0 auto}.w-title{max-width:700px}.w-section{padding:58px 0 64px}}
+@media(max-width:620px){.w-wrap{width:min(100% - 36px,520px)}.w-header{height:68px}.w-head-right{gap:8px}.w-head-right>span:first-child{display:none}.w-hero{padding:48px 0 44px;gap:32px}.w-title{font-size:clamp(34px,10vw,48px)}.w-lead{font-size:14px}.w-actions{align-items:stretch;flex-direction:column}.w-primary{justify-content:center}.w-secondary{text-align:center}.w-map-card{padding:15px;border-radius:18px}.w-float{right:-5px;bottom:18px;transform:scale(.88);transform-origin:bottom right}.w-stop b{font-size:9px}.w-stop span{font-size:8px}.w-proof-inner{display:grid;grid-template-columns:1fr 1fr;gap:14px}.w-proof-label{grid-column:1/-1}.w-proof-item{font-size:10px}.w-section-top{display:block}.w-section-desc{margin-top:14px}.w-cards{grid-template-columns:1fr}.w-card{min-height:0}.w-bottom{display:block;padding:22px}.w-bottom .w-primary{margin-top:18px;width:100%}.w-footer{flex-direction:column}}
+@media(prefers-reduced-motion:reduce){.w-route-line{animation:none}.w-primary{transition:none}}
 </style>
+
+
+<section class="welcome" id="welcome">
+  <div class="w-wrap">
+    <header class="w-header">
+      <a class="w-brand" href="#welcome" aria-label="Стрелка — главная">
+        <span class="w-brand-mark"><svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 17h6l4-6 4 3 4-7"/><path d="M16 7h5v5"/></svg></span>
+        <span><span class="w-brand-name">СТРЕЛКА</span><span class="w-brand-sub">Управление поставками</span></span>
+      </a>
+      <div class="w-head-right"><span>Цифровая логистика · S&OE</span><span class="w-demo-tag">Интерактивное демо</span></div>
+    </header>
+
+    <section class="w-hero">
+      <div>
+        <div class="w-kicker">Единый контур импортной логистики</div>
+        <h1 class="w-title">От контейнера в пути — <span>к товару в филиале.</span></h1>
+        <p class="w-lead">«Стрелка» объединяет маршрут поставки, статусы контейнеров, планирование распределения и решения по филиалам в одном рабочем пространстве.</p>
+        <div class="w-actions">
+          <button class="w-primary" id="enterDemo" type="button">Открыть интерактивное демо <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button>
+          <a class="w-secondary" href="#capabilities">Посмотреть возможности ↓</a>
+        </div>
+        <p class="w-note">Пилотный сценарий: импорт из Китая через Забайкальск с дальнейшим распределением по филиалам.</p>
+      </div>
+
+      <div class="w-visual">
+        <div class="w-map-card">
+          <div class="w-map-head"><span class="w-map-label">Маршрут поставки · схема</span><span class="w-map-status">DEMO / LIVE VIEW</span></div>
+          <svg class="w-route-svg" viewBox="0 0 620 350" role="img" aria-label="Схема маршрута Китай — Забайкальск — Новосибирск — филиалы">
+            <defs>
+              <pattern id="wgrid" width="28" height="28" patternUnits="userSpaceOnUse"><path d="M28 0H0V28" fill="none" stroke="#9db5e8" stroke-opacity=".12" stroke-width="1"/></pattern>
+              <linearGradient id="wroute" x1="0" x2="1"><stop offset="0" stop-color="#f08a4b"/><stop offset="1" stop-color="#82a9ff"/></linearGradient>
+              <filter id="wglow"><feGaussianBlur stdDeviation="5" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+            </defs>
+            <rect width="620" height="350" rx="12" fill="url(#wgrid)"/>
+            <path d="M36 250C110 190 128 205 188 180S290 125 350 150 442 190 480 125 540 85 585 60" fill="none" stroke="#49669f" stroke-width="2" stroke-dasharray="3 9" opacity=".65"/>
+            <path d="M58 235C145 190 176 208 236 164S326 124 370 151 448 174 494 112 550 78 580 55" fill="none" stroke="url(#wroute)" stroke-width="4" stroke-linecap="round" class="w-route-line" filter="url(#wglow)"/>
+            <path d="M370 151Q405 212 450 250M494 112Q520 210 555 265M494 112Q570 165 590 205" fill="none" stroke="#82a9ff" stroke-width="2" stroke-dasharray="5 7" opacity=".8"/>
+            <g fill="#f08a4b" stroke="#fff" stroke-width="2"><circle cx="58" cy="235" r="8"/><circle cx="236" cy="164" r="8"/></g>
+            <g fill="#82a9ff" stroke="#fff" stroke-width="2"><circle cx="370" cy="151" r="8"/><circle cx="494" cy="112" r="9"/><circle cx="450" cy="250" r="5"/><circle cx="555" cy="265" r="5"/><circle cx="590" cy="205" r="5"/></g>
+            <g fill="#e8efff" font-family="Arial,sans-serif" font-size="13"><text x="42" y="270">Китай</text><text x="204" y="140">Забайкальск</text><text x="335" y="182">Новосибирск</text><text x="478" y="86">Распределение</text><text x="428" y="281" font-size="10" fill="#9fb4dd">Филиалы</text></g>
+            <g fill="none" stroke="#f08a4b" stroke-width="1.5" opacity=".9"><circle cx="58" cy="235" r="17" opacity=".3"/><circle cx="494" cy="112" r="19" opacity=".3"/></g>
+          </svg>
+          <div class="w-map-foot">
+            <div class="w-stop"><b>Китай</b><span>Отправление</span></div>
+            <div class="w-stop"><b>Забайкальск</b><span>Погранпереход</span></div>
+            <div class="w-stop"><b>Новосибирск</b><span>Распределительный хаб</span></div>
+            <div class="w-stop"><b>Филиалы</b><span>Получение товара</span></div>
+          </div>
+        </div>
+        <div class="w-float"><small>Единое окно управления</small><b>1 → N</b><span>От маршрута к сети филиалов</span></div>
+      </div>
+    </section>
+
+    <div class="w-proof">
+      <div class="w-proof-inner">
+        <span class="w-proof-label">Что объединяет платформа</span>
+        <span class="w-proof-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 10h18M8 15h3"/></svg>Контейнеры и статусы</span>
+        <span class="w-proof-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 18V6m0 12h16M7 14l4-4 3 2 5-6"/></svg>Планирование поставок</span>
+        <span class="w-proof-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3v18M3 12h18"/><circle cx="12" cy="12" r="8"/></svg>Решения по филиалам</span>
+        <span class="w-proof-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 17l5-5 4 3 7-8"/><path d="M15 7h5v5"/></svg>Экономический эффект</span>
+      </div>
+    </div>
+
+    <section class="w-section" id="capabilities">
+      <div class="w-section-top">
+        <div><div class="w-eyebrow">Возможности</div><h2 class="w-h2">Логистика становится управляемой — от события до решения.</h2></div>
+        <p class="w-section-desc">Вместо разрозненных таблиц и переписки — общая картина поставки и инструменты для согласованных действий.</p>
+      </div>
+      <div class="w-cards">
+        <article class="w-card"><div class="w-card-icon"><svg viewBox="0 0 24 24"><path d="M3 7h18v12H3zM3 10h18M8 7V4h8v3M8 14h8"/></svg></div><h3>Сквозная видимость</h3><p>Маршрут, контейнеры, сроки и ключевые события собраны в одном интерфейсе.</p></article>
+        <article class="w-card"><div class="w-card-icon"><svg viewBox="0 0 24 24"><path d="M4 18V6m0 12h16M7 14l4-4 3 2 5-6"/></svg></div><h3>Планирование и координация</h3><p>План поставок и распределение товара по филиалам с учётом потребностей сети.</p></article>
+        <article class="w-card"><div class="w-card-icon"><svg viewBox="0 0 24 24"><path d="M4 18l5-5 4 3 7-9M15 7h5v5"/></svg></div><h3>Экономика решений</h3><p>Сценарии маршрутизации, расчёт выгоды и оценка влияния решений на показатели.</p></article>
+      </div>
+    </section>
+
+    <section class="w-bottom">
+      <div><h2>Посмотрите, как работает «Стрелка».</h2><p>Перейдите в демонстрационное рабочее пространство и изучите основные сценарии.</p></div>
+      <button class="w-primary" id="enterDemoBottom" type="button">Перейти к демо <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button>
+    </section>
+
+    <footer class="w-footer"><span>© Стрелка · Демонстрационный пилот</span><span>Модельные данные · Без подключения к реальным учётным системам</span></footer>
+  </div>
+</section>
 
 <div class="app">
   <aside class="side" aria-label="Навигация">
@@ -425,6 +578,20 @@ input[type=range]{width:100%;accent-color:var(--blue)}
 <div id="overlay"></div>
 <div id="toastBox"></div>
 <button class="install-app" id="installApp" type="button" hidden>Установить приложение</button>
+
+<script>
+(() => {
+  const launch = () => {
+    document.body.classList.remove('welcome-mode');
+    document.getElementById('welcome')?.setAttribute('hidden','');
+    window.scrollTo({top:0,behavior:'instant'});
+    if (!location.hash) history.replaceState(null,'',location.pathname+location.search+'#demo');
+  };
+  document.getElementById('enterDemo')?.addEventListener('click',launch);
+  document.getElementById('enterDemoBottom')?.addEventListener('click',launch);
+  if (location.hash === '#demo') launch();
+})();
+</script>
 
 <script>
 (function(){
