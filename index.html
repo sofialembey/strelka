@@ -786,6 +786,13 @@ body.welcome-mode{background:#081a3e;color:#fff;overflow-x:hidden}
  .welcome-aurora .wa-glass-panel{background:rgba(12,28,56,.78)}
  .welcome-aurora .wa-float{background:rgba(16,39,75,.82)}
 }
+
+/* Tactile feedback visual sync */
+.wa-haptic-arrival .wa-route-map{animation:wa-arrival-flash .65s ease-out}
+.wa-haptic-stage .wa-route-map{animation:wa-stage-flash .5s ease-out}
+@keyframes wa-arrival-flash{0%{filter:brightness(1.65) saturate(1.35)}100%{filter:brightness(1) saturate(1)}}
+@keyframes wa-stage-flash{0%{filter:brightness(1.7) drop-shadow(0 0 12px rgba(92,233,224,.6))}100%{filter:brightness(1) drop-shadow(0 0 0 transparent)}}
+@media(prefers-reduced-motion:reduce){.wa-haptic-arrival .wa-route-map,.wa-haptic-stage .wa-route-map{animation:none}}
 </style>
 
 
@@ -1394,6 +1401,44 @@ nav();render();
     orbs.forEach(orb => {
       orb.style.setProperty('--orb-x','0px');
       orb.style.setProperty('--orb-y','0px');
+    });
+  });
+})();
+</script>
+
+<script>
+/* Subtle haptic feedback, where the browser and device expose it */
+(() => {
+  const root = document.querySelector('.welcome-aurora');
+  if (!root) return;
+  const canVibrate = typeof navigator !== 'undefined' && typeof navigator.vibrate === 'function';
+  let initialHapticSent = false;
+  const haptic = (pattern) => {
+    if (!canVibrate) return false;
+    try { return navigator.vibrate(pattern); } catch (_) { return false; }
+  };
+  const initial = () => {
+    if (initialHapticSent) return;
+    initialHapticSent = true;
+    haptic(18);
+    root.classList.add('wa-haptic-arrival');
+    window.setTimeout(() => root.classList.remove('wa-haptic-arrival'), 650);
+  };
+  // Attempt a light arrival cue on load; mobile browsers may require a user gesture.
+  if (document.readyState === 'complete') initial();
+  else window.addEventListener('load', initial, {once:true});
+  // If the browser blocks vibration until interaction, retry once on the first tap.
+  root.addEventListener('pointerdown', () => {
+    if (!initialHapticSent) initial();
+  }, {once:true,passive:true});
+  // Stage selection: a short tactile tick lands with the route highlight.
+  root.querySelectorAll('[data-wm-step]').forEach((step, index) => {
+    step.addEventListener('click', () => {
+      haptic(index === 2 ? [12,35,18] : 12);
+      root.classList.remove('wa-haptic-stage');
+      void root.offsetWidth;
+      root.classList.add('wa-haptic-stage');
+      window.setTimeout(() => root.classList.remove('wa-haptic-stage'), 500);
     });
   });
 })();
